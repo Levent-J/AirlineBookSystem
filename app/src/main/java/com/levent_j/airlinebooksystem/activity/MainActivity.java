@@ -3,6 +3,7 @@ package com.levent_j.airlinebooksystem.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,8 +16,11 @@ import android.view.MenuItem;
 
 import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseActivity;
+import com.levent_j.airlinebooksystem.bean.Test;
 
 import butterknife.Bind;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -51,7 +55,19 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initData() {
+        Test test = new Test();
+        test.setTest("test");
+        test.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e==null){
+                    Log.e("Bmob", "success and id is"+s);
+                }else {
+                    Log.e("Bmob", "add faile");
+                }
 
+            }
+        });
     }
 
     @Override
