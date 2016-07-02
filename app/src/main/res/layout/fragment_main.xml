@@ -18,52 +18,88 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
-                android:drawableStart="@drawable/ic_guide"
-                android:drawableLeft="@drawable/ic_guide"
-                android:gravity="center"
-                android:layout_gravity="center"
+            <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12pt"
-                android:text="旅游指南"/>
-            <TextView
-                android:drawableStart="@drawable/ic_price"
-                android:drawableLeft="@drawable/ic_price"
-                android:gravity="center"
-                android:layout_gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_guide" />
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="旅游指南"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12pt"
-                android:text="价格趋势"/>
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_price"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="价格趋势"/>
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
-                android:drawableStart="@drawable/ic_boarding"
-                android:drawableLeft="@drawable/ic_boarding"
-                android:gravity="center"
-                android:layout_gravity="center"
+            <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12pt"
-                android:text="登机流程"/>
-            <TextView
-                android:drawableStart="@drawable/ic_admin"
-                android:drawableLeft="@drawable/ic_admin"
-                android:gravity="center"
-                android:layout_gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_boarding" />
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="登机流程"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12pt"
-                android:text="管理员入口"/>
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_admin"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="管理员入口"/>
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

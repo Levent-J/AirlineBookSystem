@@ -18,53 +18,56 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/tv_origin_place"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:gravity="left"
-                android:textSize="12pt"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="出发地"/>
             <ImageView
+                android:id="@+id/iv_backandforth"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_backandforth"/>
             <TextView
+                android:id="@+id/tv_destination_place"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:gravity="right"
-                android:textSize="12pt"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="目的地"/>
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_dynamic_data"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12pt"
+            android:textSize="20sp"
             android:text="日期"/>
 
         <!--TODO:优化搜索按钮-->
         <Button
+            android:id="@+id/btn_dynamic_search"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="搜索"
-            android:textSize="12pt"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="搜索记录"
-        android:layout_marginLeft="20dp"
-        android:textSize="10pt"/>
-    <!--TODO:此处为历史搜索记录-->
+        android:layout_height="match_parent"
+        android:id="@+id/rlv_dynamic"
+        android:scrollbars="none"/>
 </LinearLayout>

@@ -14,11 +14,11 @@ public abstract class BaseAdapter<T,VH extends RecyclerView.ViewHolder>
 
     public List<T> mDatas;
 
-    private Context context;
+    public Context mContext;
 
     public BaseAdapter(Context context){
         mDatas = new ArrayList<T>();
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override

@@ -1,16 +1,26 @@
 package com.levent_j.airlinebooksystem.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
+import com.levent_j.airlinebooksystem.bean.Flight;
+
+import java.util.List;
 
 import butterknife.Bind;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by levent_j on 16-7-1.
@@ -22,9 +32,11 @@ public class BookFragment extends BaseFragment{
     @Bind(R.id.et_book_name) EditText name;
     @Bind(R.id.et_book_idcard) EditText idCard;
     @Bind(R.id.et_book_flightNo) EditText flightNo;
-    @Bind(R.id.btn_search) Button search;
+    @Bind(R.id.tv_book_data) TextView data;
+    @Bind(R.id.btn_book_search) Button search;
 
     private String customerId;
+    private DatePickerPopWin pickerPopWin;
 
     public static BookFragment newInstance(String id){
         BookFragment bookFragment = new BookFragment();
@@ -41,24 +53,82 @@ public class BookFragment extends BaseFragment{
 
     @Override
     protected void initView() {
+
+        pickerPopWin = new DatePickerPopWin.Builder(getContext(), new DatePickerPopWin.OnDatePickedListener() {
+            @Override
+            public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
+                data.setText(year+"-"+month+"-"+day);
+
+            }
+        })
+                .textConfirm("选择")
+                .textCancel("取消")
+                .btnTextSize(16)
+                .viewTextSize(25)
+                .colorCancel(Color.parseColor("#999999"))
+                .colorConfirm(Color.parseColor("#009900"))
+                .minYear(1970)
+                .maxYear(2020)
+                .dateChose("2016-07-02")
+                .build();
+
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toa("选择日期");
+                pickerPopWin.showPopWin(getActivity());
+            }
+        });
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(name.getText().toString())){
+                String clientName = name.getText().toString();
+                String clientIdCard = idCard.getText().toString();
+                String clientFlightNo = flightNo.getText().toString();
+                String day = data.getText().toString();
+                if (TextUtils.isEmpty(clientName)){
                     nameWrapper.setError("姓名不能为空");
+                    return;
                 }else {
                     nameWrapper.setErrorEnabled(false);
                 }
-                if (TextUtils.isEmpty(idCard.getText().toString())){
+                if (TextUtils.isEmpty(clientIdCard)){
                     idCardWrapper.setError("身份证号不能为空");
+                    return;
                 }else {
                     idCardWrapper.setErrorEnabled(false);
                 }
-                if (TextUtils.isEmpty(flightNo.getText().toString())){
+                if (TextUtils.isEmpty(clientFlightNo)){
                     flightNoWrapper.setError("航班号不能为空");
+                    return;
                 }else {
                     flightNoWrapper.setErrorEnabled(false);
                 }
+                if (day.equals("日期")) {
+                    Toa("请选择日期");
+                    return;
+                }
+
+                BmobQuery<Flight> query = new BmobQuery<Flight>();
+                query.addWhereEqualTo("flightNo",clientFlightNo);
+                query.addWhereEqualTo("data",day);
+                query.findObjects(new FindListener<Flight>() {
+                    @Override
+                    public void done(List<Flight> list, BmobException e) {
+                        if (e == null) {
+                            if (list.get(0).getSurplusTickets()>0){
+                                Toa("还有余票");
+                            }else {
+                                Toa("已无余票");
+                            }
+                        }else {
+                            Log.e("Bmob", "error:" + e.getMessage());
+                        }
+                    }
+                });
+
+
             }
         });
     }
