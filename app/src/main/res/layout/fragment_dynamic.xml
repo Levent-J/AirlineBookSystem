@@ -1,10 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
-    <TextView
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:background="@drawable/layout_border"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DYNAMIC"/>
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:textSize="12pt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出发地"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_backandforth"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:textSize="12pt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="目的地"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12pt"
+            android:text="日期"/>
+
+        <!--TODO:优化搜索按钮-->
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="搜索"
+            android:textSize="12pt"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="搜索记录"
+        android:layout_marginLeft="20dp"
+        android:textSize="10pt"/>
+    <!--TODO:此处为历史搜索记录-->
 </LinearLayout>
