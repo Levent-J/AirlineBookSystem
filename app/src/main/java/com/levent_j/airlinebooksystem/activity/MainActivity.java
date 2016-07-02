@@ -1,26 +1,33 @@
 package com.levent_j.airlinebooksystem.activity;
 
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseActivity;
-import com.levent_j.airlinebooksystem.bean.Test;
+import com.levent_j.airlinebooksystem.base.BaseFragment;
+import com.levent_j.airlinebooksystem.fragment.BookFragment;
+import com.levent_j.airlinebooksystem.fragment.DynamicFragment;
+import com.levent_j.airlinebooksystem.fragment.InfromationFragment;
+import com.levent_j.airlinebooksystem.fragment.MainFragment;
+import com.levent_j.airlinebooksystem.fragment.QueryFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -29,9 +36,21 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.fab) FloatingActionButton fab;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Bind(R.id.nav_view) NavigationView navigationView;
+    @Bind(R.id.container) FrameLayout container;
 
     private ActionBarDrawerToggle toggle;
+    private static final String TITLE_MAIN = "首页";
+    private static final String TITLE_DYNAMIC = "航班动态";
+    private static final String TITLE_BOOK = "预订机票";
+    private static final String TITLE_QUERY = "查询机票";
+    private static final String TITLE_INFORMAtiON = "个人信息";
+    private static final String TITLE_ABOUT = "关于";
 
+    private int current;
+    private String id = "id";
+    private FragmentManager fragmentManager;
+
+    private List<BaseFragment> fragmentList;
 
 
     @Override
@@ -51,23 +70,41 @@ public class MainActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        navigationView.setCheckedItem(R.id.nav_main);
+
+        //填充所有fragment
+        fragmentManager = getSupportFragmentManager();
+        fragmentList = new ArrayList<>();
+        fragmentList.add(MainFragment.newInstance(id));
+        fragmentList.add(DynamicFragment.newInstance(id));
+        fragmentList.add(BookFragment.newInstance(id));
+        fragmentList.add(QueryFragment.newInstance(id));
+        fragmentList.add(InfromationFragment.newInstance(id));
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container,fragmentList.get(0))
+                .addToBackStack(fragmentList.get(0).getClass().getSimpleName())
+                .commit();
     }
 
     @Override
     protected void initData() {
-        Test test = new Test();
-        test.setTest("test");
-        test.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e==null){
-                    Log.e("Bmob", "success and id is"+s);
-                }else {
-                    Log.e("Bmob", "add faile");
-                }
+        toolbar.setTitle(TITLE_MAIN);
 
-            }
-        });
+        //测试数据
+//        Test test = new Test();
+//        test.setTest("test");
+//        test.save(new SaveListener<String>() {
+//            @Override
+//            public void done(String s, BmobException e) {
+//                if (e==null){
+//                    Log.e("Bmob", "success and id is"+s);
+//                }else {
+//                    Log.e("Bmob", "add faile");
+//                }
+//
+//            }
+//        });
     }
 
     @Override
@@ -82,7 +119,8 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+            finish();
         }
     }
 
@@ -117,28 +155,55 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        switch (item.getItemId()){
-            case R.id.nav_camara:
-                toolbar.setTitle("1");
-                break;
-            case R.id.nav_gallery:
-                toolbar.setTitle("2");
-                break;
-            case R.id.nav_slideshow:
-                toolbar.setTitle("3");
-                break;
-            case R.id.nav_manage:
-                toolbar.setTitle("4");
-                break;
-            case R.id.nav_share:
-                toolbar.setTitle("5");
-                break;
-            case R.id.nav_send:
-                toolbar.setTitle("6");
-                break;
+        int select = item.getItemId();
+        if (select == current){
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+        current = select;
+        BaseFragment fragment = null;
+
+        switch (select){
+            case R.id.nav_main:
+                fragment = fragmentList.get(0);
+                toolbar.setTitle(TITLE_MAIN);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_dynamic:
+                fragment = fragmentList.get(1);
+                toolbar.setTitle(TITLE_DYNAMIC);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_book:
+                fragment = fragmentList.get(2);
+                toolbar.setTitle(TITLE_BOOK);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_query:
+                fragment = fragmentList.get(3);
+                toolbar.setTitle(TITLE_QUERY);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_information:
+                fragment = fragmentList.get(4);
+                toolbar.setTitle(TITLE_INFORMAtiON);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_share:
+                //分享
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.nav_about:
+                //关于
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+        }
+//        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container,fragment)
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .commit();
         return true;
     }
 
