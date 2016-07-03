@@ -57,9 +57,11 @@
         android:text="日期"/>
 
     <Button
+        android:textColor="@color/textPrimary"
+        android:background="@drawable/bg_btn_book"
         android:textSize="18sp"
         android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="查询"
         android:id="@+id/btn_book_search"/>

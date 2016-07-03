@@ -70,6 +70,8 @@
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true">
         <Button
+            android:background="@drawable/bg_btn_book"
+            android:textColor="@color/textPrimary"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -80,6 +82,8 @@
             android:text="查询"
             android:id="@+id/btn_query_search" />
         <Button
+            android:background="@drawable/bg_btn_book"
+            android:textColor="@color/textPrimary"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
@@ -102,6 +106,7 @@
         android:layout_alignParentStart="true"
         android:orientation="vertical">
         <TextView
+            android:textColor="@color/textPrimary"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:textSize="18sp"
@@ -117,6 +122,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:textColor="@color/textPrimary"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -126,6 +132,7 @@
                 android:id="@+id/tv_ticket_flightNo" />
 
             <TextView
+                android:textColor="@color/textPrimary"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -143,6 +150,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:textColor="@color/textPrimary"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -152,6 +160,7 @@
                 android:id="@+id/tv_ticket_seat" />
 
             <TextView
+                android:textColor="@color/textPrimary"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textSize="18sp"

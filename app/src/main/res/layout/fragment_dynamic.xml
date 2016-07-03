@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:textColor="@color/textPrimary"
                 android:id="@+id/tv_origin_place"
                 android:layout_weight="1"
                 android:layout_gravity="center"
@@ -27,11 +28,13 @@
                 android:layout_height="wrap_content"
                 android:text="出发地"/>
             <ImageView
+                android:tint="@color/textPrimary"
                 android:id="@+id/iv_backandforth"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_backandforth"/>
             <TextView
+                android:textColor="@color/textPrimary"
                 android:id="@+id/tv_destination_place"
                 android:layout_weight="1"
                 android:layout_gravity="center"
@@ -49,14 +52,16 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp">
             <ImageView
+                android:tint="@color/textPrimary"
                 android:id="@+id/iv_dynamic_data"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_data"/>
             <TextView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/tv_dynamic_data"
                 android:layout_gravity="center"
-
+                android:textColor="@color/textPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -66,13 +71,15 @@
 
         <!--TODO:优化搜索按钮-->
         <Button
+            android:background="@drawable/bg_btn_dynamic"
             android:id="@+id/btn_dynamic_search"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="搜索"
+            android:textColor="@color/colorAccent"
             android:textSize="20sp"/>
 
     </LinearLayout>
