@@ -42,15 +42,27 @@
                 android:text="目的地"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_dynamic_data"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="日期"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp">
+            <ImageView
+                android:id="@+id/iv_dynamic_data"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_data"/>
+            <TextView
+                android:id="@+id/tv_dynamic_data"
+                android:layout_gravity="center"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="日期"/>
+        </LinearLayout>
+
 
         <!--TODO:优化搜索按钮-->
         <Button

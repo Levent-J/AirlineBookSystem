@@ -52,6 +52,8 @@ public class MainActivity extends BaseActivity
 
     private List<BaseFragment> fragmentList;
 
+    private long lastBackTime = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +121,14 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            super.onBackPressed();
-            finish();
+            if (System.currentTimeMillis()-lastBackTime>3000){
+                Toa("重复操作退出程序");
+                lastBackTime = System.currentTimeMillis();
+            }else {
+//                super.onBackPressed();
+                finish();
+            }
+
         }
     }
 

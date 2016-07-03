@@ -35,6 +35,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
     @Bind(R.id.tv_destination_place) TextView destinationPlace;
     @Bind(R.id.iv_backandforth) ImageView transfor;
     @Bind(R.id.tv_dynamic_data) TextView data;
+    @Bind(R.id.iv_dynamic_data) ImageView ivData;
     @Bind(R.id.btn_dynamic_search) Button search;
     @Bind(R.id.rlv_dynamic) RecyclerView flightRecyclerView;
 
@@ -65,6 +66,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
         data.setOnClickListener(this);
         search.setOnClickListener(this);
         transfor.setOnClickListener(this);
+        ivData.setOnClickListener(this);
         adapter = new DynamicAdapter(getActivity());
 
 
@@ -106,6 +108,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
             case R.id.tv_destination_place:
                 startCityList(REQUEST_DESTINATION);
                 break;
+            case R.id.iv_dynamic_data:
             case R.id.tv_dynamic_data:
 
                 pickerPopWin.showPopWin(getActivity());

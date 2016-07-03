@@ -1,8 +1,10 @@
 package com.levent_j.airlinebooksystem.fragment;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
+import com.levent_j.airlinebooksystem.bean.Client;
 import com.levent_j.airlinebooksystem.bean.Flight;
 
 import java.util.List;
@@ -21,6 +24,8 @@ import butterknife.Bind;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by levent_j on 16-7-1.
@@ -37,6 +42,9 @@ public class BookFragment extends BaseFragment{
 
     private String customerId;
     private DatePickerPopWin pickerPopWin;
+
+    private boolean isBooked = false;
+    private boolean isUpdated = false;
 
     public static BookFragment newInstance(String id){
         BookFragment bookFragment = new BookFragment();
@@ -83,26 +91,26 @@ public class BookFragment extends BaseFragment{
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String clientName = name.getText().toString();
-                String clientIdCard = idCard.getText().toString();
-                String clientFlightNo = flightNo.getText().toString();
+                final String clientName = name.getText().toString();
+                final String clientIdCard = idCard.getText().toString();
+                final String clientFlightNo = flightNo.getText().toString();
                 String day = data.getText().toString();
-                if (TextUtils.isEmpty(clientName)){
+                if (TextUtils.isEmpty(clientName)) {
                     nameWrapper.setError("姓名不能为空");
                     return;
-                }else {
+                } else {
                     nameWrapper.setErrorEnabled(false);
                 }
-                if (TextUtils.isEmpty(clientIdCard)){
+                if (TextUtils.isEmpty(clientIdCard)) {
                     idCardWrapper.setError("身份证号不能为空");
                     return;
-                }else {
+                } else {
                     idCardWrapper.setErrorEnabled(false);
                 }
-                if (TextUtils.isEmpty(clientFlightNo)){
+                if (TextUtils.isEmpty(clientFlightNo)) {
                     flightNoWrapper.setError("航班号不能为空");
                     return;
-                }else {
+                } else {
                     flightNoWrapper.setErrorEnabled(false);
                 }
                 if (day.equals("日期")) {
@@ -111,24 +119,97 @@ public class BookFragment extends BaseFragment{
                 }
 
                 BmobQuery<Flight> query = new BmobQuery<Flight>();
-                query.addWhereEqualTo("flightNo",clientFlightNo);
-                query.addWhereEqualTo("data",day);
+                query.addWhereEqualTo("flightNo", clientFlightNo);
+                query.addWhereEqualTo("data", day);
                 query.findObjects(new FindListener<Flight>() {
                     @Override
                     public void done(List<Flight> list, BmobException e) {
                         if (e == null) {
-                            if (list.get(0).getSurplusTickets()>0){
-                                Toa("还有余票");
-                            }else {
+                            if (list.get(0).getSurplusTickets() > 0) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("订票")
+                                        .setMessage("现有余票" + list.get(0).getSurplusTickets() + "张，是否购票？")
+                                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                bookTicket(clientName, clientIdCard, clientFlightNo, dialog);
+                                            }
+                                        })
+                                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .create()
+                                        .show();
+                            } else {
                                 Toa("已无余票");
                             }
-                        }else {
+                        } else {
                             Log.e("Bmob", "error:" + e.getMessage());
                         }
                     }
                 });
 
 
+            }
+        });
+    }
+
+    private void bookTicket(String name, String idCard, final String flightNo, final DialogInterface dialog) {
+        //增加客户
+        addClient(name, idCard, flightNo);
+
+        //航班票量改变
+        updateTickets(flightNo);
+
+        dialog.dismiss();
+    }
+
+    private void updateTickets(String flightNo) {
+        BmobQuery<Flight> query = new BmobQuery();
+        query.addWhereEqualTo("flightNo", flightNo);
+        query.findObjects(new FindListener<Flight>() {
+            @Override
+            public void done(List<Flight> list, BmobException e) {
+                if (e == null) {
+                    String id = list.get(0).getObjectId();
+                    int booked = list.get(0).getBookedTickets();
+                    int surplus = list.get(0).getSurplusTickets();
+                    Flight flight = new Flight();
+                    flight.setValue("bookedTickets", booked + 1);
+                    flight.setValue("surplusTickets", surplus - 1);
+                    flight.update(id, new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                isUpdated = true;
+                            } else {
+                                Log.e("Bmob", "update error:" + e.getMessage());
+                            }
+                        }
+                    });
+                } else {
+                    Log.e("Bmob", "change error:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void addClient(String name, String idCard, String flightNo) {
+        Client client = new Client();
+        client.setName(name);
+        client.setIdCard(idCard);
+        client.setFlightNo(flightNo);
+        client.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e==null){
+                    isBooked = true;
+                }else {
+                    Log.e("Bmob","save error:"+e.getMessage());
+                }
             }
         });
     }
