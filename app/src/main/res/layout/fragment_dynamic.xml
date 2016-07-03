@@ -71,7 +71,6 @@
         </LinearLayout>
 
 
-        <!--TODO:优化搜索按钮-->
         <Button
             android:background="@drawable/bg_btn_dynamic"
             android:id="@+id/btn_dynamic_search"
