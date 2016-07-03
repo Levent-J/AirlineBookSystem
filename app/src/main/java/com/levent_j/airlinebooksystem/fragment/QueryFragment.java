@@ -16,6 +16,7 @@ import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.bean.Client;
 import com.levent_j.airlinebooksystem.bean.Flight;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
@@ -44,12 +45,12 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     @Bind(R.id.tv_ticket_seat) TextView sSeat;
     @Bind(R.id.tv_ticket_no) TextView sNo;
     @Bind(R.id.layout_ticket) LinearLayout ticket;
-
+    @Bind(R.id.loading_query) AVLoadingIndicatorView loading;
 
     private String customerId;
 
     //id值，用来删除更新数据
-    private String clientId;
+    private String clientId = "1";
     private String flightId;
     private String dData;
 
@@ -83,7 +84,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                 .btnTextSize(16)
                 .viewTextSize(25)
                 .colorCancel(Color.parseColor("#999999"))
-                .colorConfirm(Color.parseColor("#009900"))
+                .colorConfirm(Color.parseColor("#7C4DEF"))
                 .minYear(1970)
                 .maxYear(2020)
                 .dateChose("2016-07-02")
@@ -137,6 +138,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     break;
                 }
 
+                loading.setVisibility(View.VISIBLE);
+
                 BmobQuery<Client> query = new BmobQuery<>();
                 query.addWhereEqualTo("name",tName);
                 query.addWhereEqualTo("idCard",tIdCard);
@@ -146,31 +149,39 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     @Override
                     public void done(List<Client> list, BmobException e) {
                         if (e == null) {
-                            Client client = list.get(0);
-                            sName.setText("姓名\n" + client.getName());
-                            sFlightNo.setText("航班号\n" + client.getFlightNo());
-                            sSeat.setText("座位号\n" + client.getSeatNo());
-                            sNo.setText("NO:"+client.getObjectId());
 
-                            clientId = client.getObjectId();
-                            flightId = client.getFlightNo();
-                            Log.e("Bmob","flightid:"+flightId);
+                            if (list.size()>0){
+                                Client client = list.get(0);
+                                sName.setText("姓名\n" + client.getName());
+                                sFlightNo.setText("航班号\n" + client.getFlightNo());
+                                sSeat.setText("座位号\n" + client.getSeatNo());
+                                sNo.setText("NO:"+client.getObjectId());
 
-                            ticket.setVisibility(View.VISIBLE);
+                                clientId = client.getObjectId();
+                                flightId = client.getFlightNo();
+                                Log.e("Bmob", "flightid:" + flightId);
 
-                            //查询航班目的地
-                            BmobQuery<Flight> fquery = new BmobQuery<Flight>();
-                            fquery.addWhereEqualTo("flightNo", client.getFlightNo());
-                            fquery.findObjects(new FindListener<Flight>() {
-                                @Override
-                                public void done(List<Flight> list, BmobException e) {
-                                    if (e == null) {
-                                        sDestination.setText("目的地\n"+list.get(0).getDestinationPlace());
-                                    } else {
-                                        Log.e("Bmob","fquery error:"+e.getMessage());
+                                //查询航班目的地
+                                BmobQuery<Flight> fquery = new BmobQuery<Flight>();
+                                fquery.addWhereEqualTo("flightNo", client.getFlightNo());
+                                fquery.findObjects(new FindListener<Flight>() {
+                                    @Override
+                                    public void done(List<Flight> list, BmobException e) {
+                                        if (e == null) {
+                                            loading.setVisibility(View.GONE);
+                                            ticket.setVisibility(View.VISIBLE);
+                                            sDestination.setText("目的地\n"+list.get(0).getDestinationPlace());
+                                        } else {
+                                            Log.e("Bmob","fquery error:"+e.getMessage());
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }else {
+                                loading.setVisibility(View.GONE);
+                                Toa("无该机票信息！");
+                            }
+
+
                         } else {
                             ticket.setVisibility(View.GONE);
                             Log.e("Bmob", "query error:" + e.getMessage());
@@ -185,16 +196,20 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                 cquery.findObjects(new FindListener<Client>() {
                     @Override
                     public void done(List<Client> list, BmobException e) {
+
+                        ticket.setVisibility(View.GONE);
+                        loading.setVisibility(View.VISIBLE);
+
                         if (e == null) {
                             if (list.size() > 0) {
                                 //存在此机票
                                 deleTicket();
                             } else {
-                                Toa("该机票不存在！");
-                                ticket.setVisibility(View.GONE);
+                                Toa("无该机票信息！");
+                                loading.setVisibility(View.GONE);
                             }
                         } else {
-                            Log.e("Bmob","delete error:"+e.getMessage());
+                            Log.e("Bmob", "delete error:" + e.getMessage());
                         }
                     }
                 });
@@ -214,6 +229,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             public void done(BmobException e) {
                 if (e == null) {
                     Toa("删除成功！");
+                    loading.setVisibility(View.GONE);
                 } else {
                     Log.e("Bmob","delete error:"+e.getMessage());
                 }

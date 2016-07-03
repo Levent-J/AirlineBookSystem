@@ -18,6 +18,7 @@ import com.levent_j.airlinebooksystem.adapter.DynamicAdapter;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.bean.Flight;
 import com.levent_j.airlinebooksystem.utils.DividerItemDecoration;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
     @Bind(R.id.iv_dynamic_data) ImageView ivData;
     @Bind(R.id.btn_dynamic_search) Button search;
     @Bind(R.id.rlv_dynamic) RecyclerView flightRecyclerView;
+    @Bind(R.id.loading_dynamic) AVLoadingIndicatorView loading;
 
     private String customerId;
     private int REQUEST_ORIGIN = 0;
@@ -86,7 +88,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
                 .btnTextSize(16)
                 .viewTextSize(25)
                 .colorCancel(Color.parseColor("#999999"))
-                .colorConfirm(Color.parseColor("#009900"))
+                .colorConfirm(Color.parseColor("#7C4DEF"))
                 .minYear(1970)
                 .maxYear(2020)
                 .dateChose("2016-07-02")
@@ -115,6 +117,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
 
                 break;
             case R.id.btn_dynamic_search:
+
                 String origin = originPlace.getText().toString();
                 String destination = destinationPlace.getText().toString();
                 String day = data.getText().toString();
@@ -125,6 +128,7 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
                 }else if (day.equals("日期")){
                     Toa("请选择正确的时间");
                 }else {
+                    loading.setVisibility(View.VISIBLE);
                     BmobQuery<Flight> query = new BmobQuery<>();
                     query.addWhereEqualTo("originPlace", origin);
                     query.addWhereEqualTo("destinationPlace", destination);
@@ -132,10 +136,18 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
                     query.findObjects(new FindListener<Flight>() {
                         @Override
                         public void done(List<Flight> list, BmobException e) {
+                            loading.setVisibility(View.GONE);
                             if (e == null) {
-                                adapter.replaceData(list);
+
+                                if (list.size() > 0) {
+                                    adapter.replaceData(list);
+                                }else {
+                                    Toa("暂无航班");
+                                }
+
                             } else {
-                                Log.e("Bmob","error:"+e.getMessage());
+                                Toa("网络繁忙，请稍后再试");
+                                Log.e("Bmob", "error:" + e.getMessage());
                             }
 
                         }

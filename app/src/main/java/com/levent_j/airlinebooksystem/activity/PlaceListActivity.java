@@ -32,7 +32,6 @@ public class PlaceListActivity extends BaseActivity{
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toa("选择了" + cities[position]);
                 Intent intent  = new Intent();
                 intent.putExtra("place",cities[position]);
                 setResult(type,intent);

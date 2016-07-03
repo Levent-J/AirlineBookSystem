@@ -74,7 +74,7 @@ public class BookFragment extends BaseFragment{
                 .btnTextSize(16)
                 .viewTextSize(25)
                 .colorCancel(Color.parseColor("#999999"))
-                .colorConfirm(Color.parseColor("#009900"))
+                .colorConfirm(Color.parseColor("#7C4DEF"))
                 .minYear(1970)
                 .maxYear(2020)
                 .dateChose("2016-07-02")
@@ -83,7 +83,6 @@ public class BookFragment extends BaseFragment{
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toa("选择日期");
                 pickerPopWin.showPopWin(getActivity());
             }
         });
