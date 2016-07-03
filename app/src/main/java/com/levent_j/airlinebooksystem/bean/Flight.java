@@ -13,9 +13,9 @@ public class Flight extends BmobObject{
     private String data;
     private String startTime;
     private String endTime;
-    private int price;
-    private int bookedTickets;
-    private int surplusTickets;
+    private Integer price;
+    private Integer bookedTickets;
+    private Integer surplusTickets;
 
     public String getFlightNo() {
         return flightNo;
@@ -77,7 +77,7 @@ public class Flight extends BmobObject{
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -85,7 +85,7 @@ public class Flight extends BmobObject{
         return bookedTickets;
     }
 
-    public void setBookedTickets(int bookedTickets) {
+    public void setBookedTickets(Integer bookedTickets) {
         this.bookedTickets = bookedTickets;
     }
 
@@ -93,7 +93,7 @@ public class Flight extends BmobObject{
         return surplusTickets;
     }
 
-    public void setSurplusTickets(int surplusTickets) {
+    public void setSurplusTickets(Integer surplusTickets) {
         this.surplusTickets = surplusTickets;
     }
 }

@@ -118,9 +118,9 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
                 String origin = originPlace.getText().toString();
                 String destination = destinationPlace.getText().toString();
                 String day = data.getText().toString();
-                if (origin.equals("出发地")){
+                if (origin.equals("出发地")||origin.equals("未选择")){
                     Toa("请选择正确的出发地");
-                }else if (destination.equals("目的地")){
+                }else if (destination.equals("目的地")||destination.equals("未选择")){
                     Toa("请选择正确的目的地");
                 }else if (day.equals("日期")){
                     Toa("请选择正确的时间");
@@ -159,10 +159,11 @@ public class DynamicFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==REQUEST_ORIGIN){
-            originPlace.setText(data.getStringExtra("place"));
-        }else {
-            destinationPlace.setText(data.getStringExtra("place"));
-        }
+            if (requestCode==REQUEST_ORIGIN){
+                originPlace.setText(data.getStringExtra("place"));
+            }else {
+                destinationPlace.setText(data.getStringExtra("place"));
+            }
+
     }
 }

@@ -1,66 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="20dp">
-    <android.support.design.widget.TextInputLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/til_query_name">
-        <EditText
-            android:singleLine="true"
-            android:id="@+id/et_query_name"
-            android:hint="输入姓名"
-            android:maxLines="1"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:id="@+id/linearLayout">
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/til_query_name">
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/et_query_name"
+                android:hint="输入姓名"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/til_query_idcard">
-        <EditText
-            android:singleLine="true"
-            android:id="@+id/et_query_idcard"
-            android:hint="输入身份证号"
-            android:maxLength="18"
-            android:maxLines="1"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/til_query_idcard">
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/et_query_idcard"
+                android:hint="输入身份证号"
+                android:maxLength="18"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/til_query_flightNo">
-        <EditText
-            android:singleLine="true"
-            android:id="@+id/et_query_flightNo"
-            android:hint="输入航班号"
-            android:maxLength="7"
-            android:maxLines="1"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/til_query_flightNo">
+            <EditText
+                android:singleLine="true"
+                android:id="@+id/et_query_flightNo"
+                android:hint="输入航班号"
+                android:maxLength="7"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/tv_query_data"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
+        <TextView
+            android:id="@+id/tv_query_data"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="日期"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="日期"/>
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查询"
+            android:id="@+id/btn_query_search" />
+        <Button
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退票"
+            android:id="@+id/btn_query_unsubscribe" />
+    </LinearLayout>
 
-    <Button
-        android:textSize="18sp"
-        android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="查询"
-        android:id="@+id/btn_query_search"/>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_ticket"
+        android:layout_margin="10dp"
+        android:background="@drawable/ticket_border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NO"
+            android:id="@+id/tv_ticket_no" />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="航班号"
+                android:id="@+id/tv_ticket_flightNo" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="到达站"
+                android:id="@+id/tv_ticket_destination"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="座位号"
+                android:id="@+id/tv_ticket_seat" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:id="@+id/tv_ticket_name" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

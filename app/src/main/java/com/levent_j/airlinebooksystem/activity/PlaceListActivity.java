@@ -28,6 +28,7 @@ public class PlaceListActivity extends BaseActivity{
     protected void initView() {
 
 
+
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -50,5 +51,13 @@ public class PlaceListActivity extends BaseActivity{
     @Override
     protected void setListener() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent  = new Intent();
+        intent.putExtra("place","未选择");
+        setResult(type, intent);
+        finish();
     }
 }

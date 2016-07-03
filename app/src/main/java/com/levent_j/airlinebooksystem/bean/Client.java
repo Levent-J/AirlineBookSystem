@@ -9,7 +9,8 @@ public class Client extends BmobObject{
     private String name;
     private String idCard;
     private String flightNo;
-    private int seatNo;
+    private String data;
+    private Integer seatNo;
 
     public String getName() {
         return name;
@@ -35,11 +36,19 @@ public class Client extends BmobObject{
         this.flightNo = flightNo;
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     public int getSeatNo() {
         return seatNo;
     }
 
-    public void setSeatNo(int seatNo) {
+    public void setSeatNo(Integer seatNo) {
         this.seatNo = seatNo;
     }
 }

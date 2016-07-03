@@ -94,7 +94,7 @@ public class BookFragment extends BaseFragment{
                 final String clientName = name.getText().toString();
                 final String clientIdCard = idCard.getText().toString();
                 final String clientFlightNo = flightNo.getText().toString();
-                String day = data.getText().toString();
+                final String day = data.getText().toString();
                 if (TextUtils.isEmpty(clientName)) {
                     nameWrapper.setError("姓名不能为空");
                     return;
@@ -132,7 +132,7 @@ public class BookFragment extends BaseFragment{
                                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                bookTicket(clientName, clientIdCard, clientFlightNo, dialog);
+                                                bookTicket(clientName, clientIdCard, clientFlightNo,day, dialog);
                                             }
                                         })
                                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -157,14 +157,18 @@ public class BookFragment extends BaseFragment{
         });
     }
 
-    private void bookTicket(String name, String idCard, final String flightNo, final DialogInterface dialog) {
+    private void bookTicket(String name, String idCard, String flightNo,String data, final DialogInterface dialog) {
         //增加客户
-        addClient(name, idCard, flightNo);
+        addClient(name, idCard, flightNo,data);
 
         //航班票量改变
         updateTickets(flightNo);
 
         dialog.dismiss();
+    }
+
+    private void createTicket(String name, String flightNo) {
+
     }
 
     private void updateTickets(String flightNo) {
@@ -177,9 +181,10 @@ public class BookFragment extends BaseFragment{
                     String id = list.get(0).getObjectId();
                     int booked = list.get(0).getBookedTickets();
                     int surplus = list.get(0).getSurplusTickets();
-                    Flight flight = new Flight();
-                    flight.setValue("bookedTickets", booked + 1);
-                    flight.setValue("surplusTickets", surplus - 1);
+
+                    Flight flight = list.get(0);
+                    flight.setBookedTickets( booked + 1);
+                    flight.setSurplusTickets( surplus - 1);
                     flight.update(id, new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
@@ -197,11 +202,12 @@ public class BookFragment extends BaseFragment{
         });
     }
 
-    private void addClient(String name, String idCard, String flightNo) {
+    private void addClient(String name, String idCard, String flightNo,String data) {
         Client client = new Client();
         client.setName(name);
         client.setIdCard(idCard);
         client.setFlightNo(flightNo);
+        client.setData(data);
         client.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
