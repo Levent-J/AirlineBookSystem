@@ -92,21 +92,6 @@ public class MainActivity extends BaseActivity
     @Override
     protected void initData() {
         toolbar.setTitle(TITLE_MAIN);
-
-        //测试数据
-//        Test test = new Test();
-//        test.setTest("test");
-//        test.save(new SaveListener<String>() {
-//            @Override
-//            public void done(String s, BmobException e) {
-//                if (e==null){
-//                    Log.e("Bmob", "success and id is"+s);
-//                }else {
-//                    Log.e("Bmob", "add faile");
-//                }
-//
-//            }
-//        });
     }
 
     @Override
@@ -219,5 +204,9 @@ public class MainActivity extends BaseActivity
     public void onClick(View v) {
         Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    public void backMainFragment(){
+
     }
 }

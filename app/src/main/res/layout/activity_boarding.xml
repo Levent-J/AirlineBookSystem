@@ -3,4 +3,35 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp">
+        <TextView
+
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="1，网上购买的多数是电子机票，只要身份证就可以办理登机，不需要其他凭证。
+
+很多公司说送票上门，其实是送纸质的行程单，不是必要的，等候人家送票也不方便；电子机票会给你个手机短信，把相关信息（起飞时间等等）告诉你；而纸质行程单是打印出来的相关信息，内容和手机短信差不多。）
+
+2，确认起飞的机场和时间，大的机场（如北京）有几个航站楼，上海更是两个机场、各有几个航站楼，必须要确认，不能搞错，免得奔波（各航站楼相距很远）。
+
+3，提前1个半小时到达机场（第一次坐飞机提前2小时为好），找到你坐的那航班的航空公司值机柜台，将身份证递交进去，他们为你办理登机手续（核对身份证和姓名等等），然后给你一张登机牌；
+
+4，可以随身携带一件5公斤以内的行李、免费托运20公斤行李（个别航空公司只允许15公斤）。托运手续在办登机手续时同时办理（先递交身份证，然后把托运行李也递进去）；
+
+5，不能携带易燃易爆物品，打火机也不能带。刀具、棍棒之类可以托运，不能随身带。液体不能携带，酒只能托运少量、没有打开过的原装。液体化妆品每类一瓶，每瓶不超过100毫升。
+
+6，办完行李托运后，持身份证和登机牌，排队等候安检、进入候机大厅；
+
+7，找到登机牌上指定的登机口，在那里等候。一般起飞前15分钟开始登机。登机后按登机牌上的座位入座。
+
+8，网上能查到某个航班是否免费供餐。航行中不供饮料、吃饭时间不供餐的少见，但确实有。
+
+9，下飞机后，在出口处行李转盘边等候，看到自己的行李出来了，就拿走、出站。 "/>
+    </ScrollView>
+
 </LinearLayout>

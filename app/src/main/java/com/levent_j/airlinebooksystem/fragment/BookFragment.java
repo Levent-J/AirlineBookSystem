@@ -1,6 +1,7 @@
 package com.levent_j.airlinebooksystem.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.levent_j.airlinebooksystem.R;
+import com.levent_j.airlinebooksystem.activity.MainActivity;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.bean.Client;
 import com.levent_j.airlinebooksystem.bean.Flight;
@@ -117,35 +119,46 @@ public class BookFragment extends BaseFragment{
                     return;
                 }
 
+                search.setText("请等待");
+                search.setEnabled(false);
+
                 BmobQuery<Flight> query = new BmobQuery<Flight>();
                 query.addWhereEqualTo("flightNo", clientFlightNo);
                 query.addWhereEqualTo("data", day);
                 query.findObjects(new FindListener<Flight>() {
                     @Override
                     public void done(List<Flight> list, BmobException e) {
+                        search.setText("查询");
+                        search.setEnabled(true);
                         if (e == null) {
-                            if (list.get(0).getSurplusTickets() > 0) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setTitle("订票")
-                                        .setMessage("现有余票" + list.get(0).getSurplusTickets() + "张，是否购票？")
-                                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                bookTicket(clientName, clientIdCard, clientFlightNo,day, dialog);
-                                            }
-                                        })
-                                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .create()
-                                        .show();
-                            } else {
-                                Toa("已无余票");
+                            if (list.size()>0){
+                                if (list.get(0).getSurplusTickets() > 0) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                    builder.setTitle("订票")
+                                            .setMessage("现有余票" + list.get(0).getSurplusTickets() + "张，是否购票？")
+                                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    bookTicket(clientName, clientIdCard, clientFlightNo,day, dialog);
+                                                }
+                                            })
+                                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .create()
+                                            .show();
+                                } else {
+                                    Toa("该航班已无余票");
+                                }
+                            }else {
+                                Toa("无此航班信息");
                             }
+
                         } else {
+                            Toa("网络繁忙，请稍后再试");
                             Log.e("Bmob", "error:" + e.getMessage());
                         }
                     }
@@ -157,17 +170,16 @@ public class BookFragment extends BaseFragment{
     }
 
     private void bookTicket(String name, String idCard, String flightNo,String data, final DialogInterface dialog) {
+        search.setText("请等待");
+        search.setEnabled(false);
+
         //增加客户
-        addClient(name, idCard, flightNo,data);
+        addClient(name, idCard, flightNo, data);
 
         //航班票量改变
         updateTickets(flightNo);
 
         dialog.dismiss();
-    }
-
-    private void createTicket(String name, String flightNo) {
-
     }
 
     private void updateTickets(String flightNo) {
@@ -189,12 +201,16 @@ public class BookFragment extends BaseFragment{
                         public void done(BmobException e) {
                             if (e == null) {
                                 isUpdated = true;
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                getActivity().finish();
                             } else {
+                                Toa("网络繁忙，请稍后再试");
                                 Log.e("Bmob", "update error:" + e.getMessage());
                             }
                         }
                     });
                 } else {
+                    Toa("网络繁忙，请稍后再试");
                     Log.e("Bmob", "change error:" + e.getMessage());
                 }
             }
@@ -213,6 +229,7 @@ public class BookFragment extends BaseFragment{
                 if (e==null){
                     isBooked = true;
                 }else {
+                    Toa("网络繁忙，请稍后再试");
                     Log.e("Bmob","save error:"+e.getMessage());
                 }
             }

@@ -3,6 +3,7 @@ package com.levent_j.airlinebooksystem.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.levent_j.airlinebooksystem.R;
@@ -12,6 +13,7 @@ import com.levent_j.airlinebooksystem.activity.GuideActivity;
 import com.levent_j.airlinebooksystem.activity.PriceActivity;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.widget.InputDialog;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 
@@ -23,6 +25,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     @Bind(R.id.layout_boarding) LinearLayout boarding;
     @Bind(R.id.layout_price) LinearLayout price;
     @Bind(R.id.layout_admin) LinearLayout admin;
+    @Bind(R.id.iv_bg) ImageView bg;
 
     private String customerId;
 
@@ -41,6 +44,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView() {
+        Picasso.with(getContext())
+                .load(R.drawable.bg3)
+                .resize(400,280)
+                .into(bg);
         guide.setOnClickListener(this);
         boarding.setOnClickListener(this);
         price.setOnClickListener(this);
