@@ -104,7 +104,7 @@
                 <ImageView
                     android:tint="@color/textPrimary"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_admin"/>
                 <TextView

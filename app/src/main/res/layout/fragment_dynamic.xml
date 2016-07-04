@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="搜索"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"/>
 
     </LinearLayout>

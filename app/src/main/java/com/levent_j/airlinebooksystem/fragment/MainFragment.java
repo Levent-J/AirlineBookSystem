@@ -7,6 +7,9 @@ import android.widget.LinearLayout;
 
 import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.activity.AdminActivity;
+import com.levent_j.airlinebooksystem.activity.BoardingActivity;
+import com.levent_j.airlinebooksystem.activity.GuideActivity;
+import com.levent_j.airlinebooksystem.activity.PriceActivity;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.widget.InputDialog;
 
@@ -53,10 +56,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.layout_guide:
+                startActivity(new Intent(getActivity(), GuideActivity.class));
                 break;
             case R.id.layout_boarding:
+                startActivity(new Intent(getActivity(), BoardingActivity.class));
                 break;
             case R.id.layout_price:
+                startActivity(new Intent(getActivity(), PriceActivity.class));
                 break;
             case R.id.layout_admin:
                 InputDialog.Builder builder = new InputDialog.Builder(getContext());

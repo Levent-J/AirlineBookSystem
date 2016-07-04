@@ -27,24 +27,31 @@
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".activity.PlaceListActivity"/>
-        <activity
-            android:name=".activity.AdminActivity"
-            android:label="管理员"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.PlaceListActivity"/>
+        <activity
+            android:name=".activity.AdminActivity"
+            android:label="管理员"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".activity.LoginActivity" />
+        <activity
+            android:name=".activity.EditFlightActivity"></activity>
+        <activity
+            android:name=".activity.EditClientActivity"></activity>
+        <activity android:name=".activity.GuideActivity"></activity>
+        <activity android:name=".activity.BoardingActivity"></activity>
+        <activity android:name=".activity.PriceActivity"></activity>
     </application>
 
 </manifest>

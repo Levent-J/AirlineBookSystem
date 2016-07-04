@@ -1,11 +1,15 @@
 package com.levent_j.airlinebooksystem.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.levent_j.airlinebooksystem.R;
+import com.levent_j.airlinebooksystem.activity.EditClientActivity;
 import com.levent_j.airlinebooksystem.adapter.AdminClientAdapter;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.bean.Client;
@@ -24,6 +28,7 @@ import cn.bmob.v3.listener.FindListener;
 public class AdminClientFragment extends BaseFragment{
     @Bind(R.id.rlv_admin_client) RecyclerView clientRecyclerView;
     @Bind(R.id.srl_client) SwipeRefreshLayout refresh;
+    @Bind(R.id.fab_client) FloatingActionButton fab;
 
     private static final String KEY = "ARGS";
     private AdminClientAdapter adapter;
@@ -53,9 +58,17 @@ public class AdminClientFragment extends BaseFragment{
                 updateData();
             }
         });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditClientActivity.class);
+                intent.putExtra("isNew",true);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
-    private void updateData() {
+    public void updateData() {
         BmobQuery<Client> query = new BmobQuery<>();
         query.findObjects(new FindListener<Client>() {
             @Override
