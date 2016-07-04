@@ -12,7 +12,7 @@ import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseActivity;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.fragment.AdminFlightFragment;
-import com.levent_j.airlinebooksystem.fragment.ClinetAdminFragment;
+import com.levent_j.airlinebooksystem.fragment.AdminClientFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class AdminActivity extends BaseActivity{
         setSupportActionBar(toolbar);
         pageAdpater = new PageAdpater(getSupportFragmentManager(),this);
         pageAdpater.addFragment(AdminFlightFragment.newInstance("航班"),"航班");
-        pageAdpater.addFragment(ClinetAdminFragment.newInstance("乘客"),"乘客");
+        pageAdpater.addFragment(AdminClientFragment.newInstance("乘客"),"乘客");
         viewPager.setAdapter(pageAdpater);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
