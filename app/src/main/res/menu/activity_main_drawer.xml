@@ -10,14 +10,11 @@
             android:title="预订机票" />
         <item android:id="@+id/nav_query" android:icon="@drawable/ic_nav_query"
             android:title="查询机票" />
-        <item android:id="@+id/nav_information" android:icon="@drawable/ic_nav_information"
-            android:title="个人信息" />
+
     </group>
 
     <item android:title="其他">
         <menu>
-            <item android:id="@+id/nav_share" android:icon="@drawable/ic_nav_share"
-                android:title="分享" />
             <item android:id="@+id/nav_about" android:icon="@drawable/ic_nav_about"
                 android:title="关于" />
         </menu>

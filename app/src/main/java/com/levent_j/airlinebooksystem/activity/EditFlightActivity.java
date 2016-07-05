@@ -1,6 +1,7 @@
 package com.levent_j.airlinebooksystem.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.levent_j.airlinebooksystem.R;
 import com.levent_j.airlinebooksystem.base.BaseActivity;
 import com.levent_j.airlinebooksystem.bean.Flight;
@@ -24,6 +26,7 @@ import cn.bmob.v3.listener.UpdateListener;
 public class EditFlightActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.tv_edit_origin) TextView origin;
     @Bind(R.id.tv_edit_destination) TextView destination;
+    @Bind(R.id.tv_edit_flight_date) TextView date;
     @Bind(R.id.et_edit_time_start) EditText start;
     @Bind(R.id.et_edit_time_end) EditText end;
     @Bind(R.id.et_edit_flightNo) EditText flightNo;
@@ -37,6 +40,8 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
     private int REQUEST_ORIGIN = 0;
     private int REQUEST_DESTINATION = 1;
     private String objectId;
+    private DatePickerPopWin pickerPopWin;
+
 
     @Override
     protected int getLayoutId() {
@@ -45,7 +50,23 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initView() {
+        pickerPopWin = new DatePickerPopWin.Builder(this, new DatePickerPopWin.OnDatePickedListener() {
+            @Override
+            public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
+                date.setText(year+"-"+month+"-"+day);
 
+            }
+        })
+                .textConfirm("选择")
+                .textCancel("取消")
+                .btnTextSize(16)
+                .viewTextSize(25)
+                .colorCancel(Color.parseColor("#999999"))
+                .colorConfirm(Color.parseColor("#7C4DEF"))
+                .minYear(1970)
+                .maxYear(2020)
+                .dateChose("2016-07-02")
+                .build();
     }
 
     @Override
@@ -57,6 +78,7 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
             objectId = intent.getStringExtra("id");
             origin.setText(intent.getStringExtra("origin"));
             destination.setText(intent.getStringExtra("destination"));
+            date.setText(intent.getStringExtra("date"));
             start.setText(intent.getStringExtra("start"));
             end.setText(intent.getStringExtra("end"));
             flightNo.setText(intent.getStringExtra("no"));
@@ -71,6 +93,7 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
     protected void setListener() {
         origin.setOnClickListener(this);
         destination.setOnClickListener(this);
+        date.setOnClickListener(this);
         commit.setOnClickListener(this);
     }
 
@@ -83,9 +106,13 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
             case R.id.tv_edit_destination:
                 startCityList(REQUEST_DESTINATION);
                 break;
+            case R.id.tv_edit_flight_date:
+                pickerPopWin.showPopWin(this);
+                break;
             case R.id.btn_flight_commit:
                 String mOrigin = origin.getText().toString();
                 String mDestination = destination.getText().toString();
+                String mDate = date.getText().toString();
                 String mStart = start.getText().toString();
                 String mEnd = end.getText().toString();
                 String mFlight = flightNo.getText().toString();
@@ -94,21 +121,23 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
                 int mBooked = Integer.parseInt(TextUtils.isEmpty(booked.getText().toString())?"0":booked.getText().toString());
                 int mSurplus = Integer.parseInt(TextUtils.isEmpty(surplus.getText().toString())?"0":surplus.getText().toString());
                 if (mOrigin.equals("请选择")){
-                    Toa("选择写出发地");
-                }else if (mDestination.equals("请选择")){
-                    Toa("选择写目的地");
+                    Toa("请选择出发地");
+                }else if (mDestination.equals("请选择")) {
+                    Toa("请选择目的地");
+                }else if (mDate.equals("请选择")){
+                    Toa("请选择日期");
                 } else if (TextUtils.isEmpty(mStart)||TextUtils.isEmpty(mEnd)||TextUtils.isEmpty(mFlight)
                         ||TextUtils.isEmpty(mType)){
                     Toa("请填写完整航班信息");
                 }else {
-                    commitFlight(mOrigin,mDestination,mStart,mEnd,mFlight,mType,mPrice,mBooked,mSurplus);
+                    commitFlight(mOrigin,mDestination,mDate,mStart,mEnd,mFlight,mType,mPrice,mBooked,mSurplus);
                 }
 
                 break;
         }
     }
 
-    private void commitFlight(String mOrigin, String mDestination, String mStart, String mEnd,
+    private void commitFlight(String mOrigin, String mDestination, String mDate, String mStart, String mEnd,
                               String mFlight, String mType, int mPrice, int mBooked, int mSurplus) {
         commit.setText("请等待");
         commit.setEnabled(false);
@@ -116,6 +145,7 @@ public class EditFlightActivity extends BaseActivity implements View.OnClickList
         Flight flight = new Flight();
         flight.setOriginPlace(mOrigin);
         flight.setDestinationPlace(mDestination);
+        flight.setData(mDate);
         flight.setStartTime(mStart);
         flight.setEndTime(mEnd);
         flight.setFlightNo(mFlight);

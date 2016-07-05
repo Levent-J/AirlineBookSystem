@@ -5,4 +5,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">设置</string>
+    <string name="about">你要去哪儿——一款航空订票系统，这是我的综合课程设计项目，主要功能有：\n
+    客户：\n
+        1.航班动态功能——查询指定地点间、指定日期的航班信息\n
+        2.预订机票功能——根据航班号订购机票\n
+        3.查询机票功能——根据客户姓名、身份证号码及出行日期查询机票，选择是否退票\n
+    管理员：\n
+        增删改查所有航班信息和客户信息\n
+    </string>
 </resources>

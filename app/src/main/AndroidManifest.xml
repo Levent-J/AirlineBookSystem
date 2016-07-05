@@ -52,6 +52,7 @@
         <activity android:name=".activity.GuideActivity"></activity>
         <activity android:name=".activity.BoardingActivity"></activity>
         <activity android:name=".activity.PriceActivity"></activity>
+        <activity android:name=".activity.AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -83,6 +83,7 @@ public class AdminFlightAdapter extends BaseAdapter<Flight,AdminFlightAdapter.mV
                                     intent.putExtra("id",flight.getObjectId());
                                     intent.putExtra("origin",flight.getOriginPlace());
                                     intent.putExtra("destination",flight.getDestinationPlace());
+                                    intent.putExtra("date",flight.getData());
                                     intent.putExtra("start",flight.getStartTime());
                                     intent.putExtra("end",flight.getEndTime());
                                     intent.putExtra("no",flight.getFlightNo());

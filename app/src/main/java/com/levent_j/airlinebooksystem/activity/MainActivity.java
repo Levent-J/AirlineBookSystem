@@ -1,6 +1,7 @@
 package com.levent_j.airlinebooksystem.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,7 +21,6 @@ import com.levent_j.airlinebooksystem.base.BaseActivity;
 import com.levent_j.airlinebooksystem.base.BaseFragment;
 import com.levent_j.airlinebooksystem.fragment.BookFragment;
 import com.levent_j.airlinebooksystem.fragment.DynamicFragment;
-import com.levent_j.airlinebooksystem.fragment.InfromationFragment;
 import com.levent_j.airlinebooksystem.fragment.MainFragment;
 import com.levent_j.airlinebooksystem.fragment.QueryFragment;
 
@@ -81,8 +81,6 @@ public class MainActivity extends BaseActivity
         fragmentList.add(DynamicFragment.newInstance(id));
         fragmentList.add(BookFragment.newInstance(id));
         fragmentList.add(QueryFragment.newInstance(id));
-        fragmentList.add(InfromationFragment.newInstance(id));
-
         fragmentManager.beginTransaction()
                 .replace(R.id.container,fragmentList.get(0))
                 .addToBackStack(fragmentList.get(0).getClass().getSimpleName())
@@ -178,17 +176,9 @@ public class MainActivity extends BaseActivity
                 toolbar.setTitle(TITLE_QUERY);
                 drawer.closeDrawer(GravityCompat.START);
                 break;
-            case R.id.nav_information:
-                fragment = fragmentList.get(4);
-                toolbar.setTitle(TITLE_INFORMAtiON);
-                drawer.closeDrawer(GravityCompat.START);
-                break;
-            case R.id.nav_share:
-                //分享
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
             case R.id.nav_about:
                 //关于
+                startActivity(new Intent(this,AboutActivity.class));
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
         }
