@@ -9,12 +9,5 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
     android:gravity="bottom">
 
-    <ImageView
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon"
-        android:id="@+id/imageView" />
 
 </LinearLayout>
